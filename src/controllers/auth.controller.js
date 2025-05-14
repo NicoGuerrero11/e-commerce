@@ -42,7 +42,11 @@ export const loginUser = async (req, res) => {
         if(!match)return res.status(401).json({message:"Password is incorrect"})
 
         const token = jwt.sign(
-            {id:user._id, name:user.username},
+            {
+                id:user._id,
+                email: user.email,
+                role: user.role
+            },
             JWT_SECRET_KEY,
             {expiresIn:"1h"}
         )
@@ -51,8 +55,8 @@ export const loginUser = async (req, res) => {
             token,
             user: {
                 id: user._id,
-                email: user.email,
                 username: user.username,
+                email: user.email,
                 role: user.role
             }
         })

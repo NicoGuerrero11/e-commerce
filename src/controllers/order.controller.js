@@ -51,3 +51,16 @@ export const createOrder = async (req, res) => {
         return res.status(500).json({message:error.message})
     }
 }
+
+
+export const getUserOrders = async (req, res) => {
+    try{
+        const orders = await Order.find({user: req.user.id}).sort({createdAt:-1})
+        res.status(200).json({
+            message:"Orders retrieved successfully",
+            orders
+        })
+    }catch(err){
+        return res.status(500).json({message:err.message})
+    }
+}

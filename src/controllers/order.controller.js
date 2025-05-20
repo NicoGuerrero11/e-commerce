@@ -107,3 +107,47 @@ export const cancelOrder = async (req, res) => {
 
 
 }
+
+export const getAllOrders = async (req, res) => {
+    try{
+        const orders = await Order.find()
+            .populate('user','email')
+            .sort({createdAt:-1})
+        res.status(200).json({
+            message:"Orders retrieved successfully",
+            orders
+        })
+    }catch (error) {
+        return res.status(500).json({message:error.message})
+    }
+}
+
+export const updateOrderStatus = async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+    try {
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: 'Invalid order ID format' });
+        }
+        const order = await Order.findById(id);
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+        const allowedStatuses = ['pending', 'paid', 'shipped', 'cancelled'];
+        if (!allowedStatuses.includes(status)) {
+            return res.status(400).json({ message: 'Invalid status value' });
+        }
+        order.status = status;
+        await order.save();
+
+        res.status(200).json({
+            message: 'Order status updated successfully',
+            order
+        });
+
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+

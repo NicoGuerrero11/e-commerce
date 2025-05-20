@@ -14,13 +14,14 @@ app.use('/api', productRoutes)
 app.use('/api', orderRoutes)
 
 
-const starServer = async () => {
-    // connect to MongoDB
-    await connectDB();
-    // connect to server
-    app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
-    });
-};
+if (process.env.NODE_ENV !== 'test') {
+    const startServer = async () => {
+        await connectDB();
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+    };
+    startServer();
+}
 
-starServer()
+export default app;

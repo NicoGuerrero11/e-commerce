@@ -1,5 +1,6 @@
 import Order from '../models/order.model';
 import Product from '../models/product.model.js';
+import mongoose from 'mongoose';
 
 export const createOrder = async (req, res) => {
     const {products, shippingAddress} = req.body;
@@ -63,4 +64,46 @@ export const getUserOrders = async (req, res) => {
     }catch(err){
         return res.status(500).json({message:err.message})
     }
+}
+
+export const getOrderById = async (req, res) => {
+    const {id} = req.params
+    try{
+        if (!mongoose.Types.ObjectId.isValid(id)){
+            return res.status(400).json({message:"Invalid order ID format"})
+        }
+        const orderId = await Order.findById(id)
+        if(!orderId) return res.status(404).json({message:"Order not found"})
+        if (orderId.user.toString() !== req.user.id){
+            return res.status(403).json({message:"User not authorized"})
+        }
+        res.status(200).json({
+            message:"Order retrieved successfully",
+            order: orderId
+        })
+    }catch (error) {
+        return res.status(500).json({message:error.message})
+    }
+}
+
+export const cancelOrder = async (req, res) => {
+    const {id} = req.params
+
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(400).json({message:"Invalid order ID format"})
+    }
+    const order = await Order.findById(id)
+    if (!order) return res.status(404).json({message:"Order not found"})
+
+    if(order.user.toString() !== req.user.id){
+        return res.status(403).json({message:"User not authorized"})
+    }
+    if(order.status !== 'pending'){
+        return res.status(400).json({message:"Order cannot be cancelled"})
+    }
+    order.status = 'cancelled'
+    await order.save();
+    res.status(200).json({message:"Order cancelled successfully"})
+
+
 }

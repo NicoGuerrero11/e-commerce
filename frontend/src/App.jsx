@@ -4,7 +4,7 @@ import Register from './pages/Register'
 import Products from './pages/Products'
 import Cart from './pages/Cart.jsx'
 import MainLayout from './layouts/MainLayout'
-import AdminProductList from './pages/admin/AdminProductList.jsx'
+import AdminProductList from './pages/admin/products/AdminProductList.jsx'
 
 function App() {
     return (

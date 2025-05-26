@@ -95,7 +95,7 @@ function AdminProductList() {
                         <TableCell>${product.price.toFixed(2)}</TableCell>
                         <TableCell>${product.countInStock}</TableCell>
                         <TableCell>
-                            <Button variant="contained" color="primary" onClick={() => navigate(`/admin/products/${product._id}`)}>
+                            <Button variant="contained" color="primary" onClick={() => navigate(`/admin/products/${product._id}/edit`)}>
                                 Edit
                             </Button>
                             <Button variant="contained" color="secondary" onClick={() => handleDelete(product._id)} sx={{ml: 2}}>

@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import { Container, Button, Typography, Box } from '@mui/material'
+import { TextField, Button, Typography, Box } from '@mui/material'
 
 function ProductForm({initialData = {}, onSubmit, formTitle}) {
     const [name, setName] = useState(initialData.name || '');
@@ -9,6 +9,12 @@ function ProductForm({initialData = {}, onSubmit, formTitle}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if(price < 0 || countInStock < 0) {
+            alert('Price and Count In Stock must be non-negative'); 
+            return;
+        }
+
         onSubmit(name, price, countInStock, image);
     }
   return (
@@ -30,6 +36,7 @@ function ProductForm({initialData = {}, onSubmit, formTitle}) {
                 margin="normal"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
+                inputProps={{ min: 0 }}
                 required
             />
             <TextField
@@ -39,6 +46,7 @@ function ProductForm({initialData = {}, onSubmit, formTitle}) {
                 margin="normal"
                 value={countInStock}
                 onChange={(e) => setCountInStock(e.target.value)}
+                inputProps={{ min: 0 }}
                 required
             />
             <TextField

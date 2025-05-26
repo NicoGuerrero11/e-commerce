@@ -4,6 +4,7 @@ import Register from './pages/Register'
 import Products from './pages/Products'
 import Cart from './pages/Cart.jsx'
 import MainLayout from './layouts/MainLayout'
+import AdminProductList from './pages/admin/AdminProductList.jsx'
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/admin/products" element={<AdminProductList />} />
             </Route>
         </Routes>
     );

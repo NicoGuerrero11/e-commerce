@@ -1,14 +1,19 @@
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material'
+import {jwtDecode} from 'jwt-decode';
 
 const MainLayout = () => {
+    // Check if the user is logged in and decode the token to get user info
+    const token = localStorage.getItem('token');
+    const user = token ? jwtDecode(token) : null;
 
     const location = useLocation();
 
     const pages = [
         { name: 'Products', path: '/products' },
         { name: 'Cart', path: '/cart' },
-        { name: 'Login', path: '/login' }
+        { name: 'Login', path: '/login' },
+        { name: 'Admin', path: '/admin/products' }
     ];
 
     const visiblePages = pages.filter((page) => {
@@ -25,16 +30,32 @@ const MainLayout = () => {
                         <Typography variant="h4"  sx={{ flexGrow: 1 }}>
                             E-Commerce
                         </Typography>
-                        {visiblePages.map((page) => (
-                            <Button
-                                key={page.path}
-                                color="inherit"
-                                component={Link}
-                                to={page.path}
-                            >
-                                {page.name}
-                            </Button>
+                        {visiblePages
+
+                            .filter((page) => {
+                                // Show 'Admin' link only if the user is an admin
+                                if (page.name === 'Admin') {
+                                    return user && user.role === 'admin';
+                                }
+                                // Show 'Login' link only if the user is not logged in
+                                // if (page.name === 'Login') {
+                                //     return !user;
+                                // }
+                                // Show all other links for all users
+                                return true;
+                            })
+
+                            .map((page) => (
+                                <Button
+                                    key={page.path}
+                                    color="inherit"
+                                    component={Link}
+                                    to={page.path}
+                                >
+                                    {page.name}
+                                </Button>
                         ))}
+                        
 
                 </Toolbar>
             </AppBar>

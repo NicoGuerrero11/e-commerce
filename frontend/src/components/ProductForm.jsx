@@ -36,7 +36,7 @@ function ProductForm({initialData = {}, onSubmit, formTitle}) {
                 margin="normal"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
-                inputProps={{ min: 0 }}
+                inputProps={{ step:'0.01' ,min: '0' }}
                 required
             />
             <TextField

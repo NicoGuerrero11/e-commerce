@@ -8,6 +8,7 @@ const MainLayout = () => {
     const user = token ? jwtDecode(token) : null;
 
     const location = useLocation();
+    const currentPath = location.pathname === '/' ? '/products' : location.pathname;
 
     const pages = [
         { name: 'Products', path: '/products' },
@@ -16,10 +17,11 @@ const MainLayout = () => {
         { name: 'Admin', path: '/admin/products' }
     ];
 
-    const visiblePages = pages.filter((page) => {
-        if (page.path === '/') return location.pathname !== '/';
-        return location.pathname !== page.path;
-    });
+    // const visiblePages = pages.filter((page) => {
+    //     if (page.path === '/') return location.pathname !== '/';
+    //     return location.pathname !== page.path;
+    // });
+    const visiblePages = pages.filter((page) => currentPath !== page.path);
 
     return(
 

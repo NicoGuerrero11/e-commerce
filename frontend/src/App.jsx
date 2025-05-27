@@ -7,6 +7,7 @@ import MainLayout from './layouts/MainLayout'
 import AdminProductList from './pages/admin/products/AdminProductList.jsx'
 import CreateProduct from './pages/admin/products/CreateProduct.jsx'
 import EditProduct from './pages/admin/products/EditProduct.jsx'
+import Profile from './pages/Profile.jsx'
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/admin/products" element={<AdminProductList />} />
                 <Route path="/admin/products/new" element={<CreateProduct />} />
                 <Route path="/admin/products/:id/edit" element={<EditProduct />} />
+                <Route path="/profile" element={<Profile />} />
             </Route>
         </Routes>
     );

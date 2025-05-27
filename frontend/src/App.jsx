@@ -6,6 +6,7 @@ import Cart from './pages/Cart.jsx'
 import MainLayout from './layouts/MainLayout'
 import AdminProductList from './pages/admin/products/AdminProductList.jsx'
 import CreateProduct from './pages/admin/products/CreateProduct.jsx'
+import EditProduct from './pages/admin/products/EditProduct.jsx'
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/admin/products" element={<AdminProductList />} />
                 <Route path="/admin/products/new" element={<CreateProduct />} />
+                <Route path="/admin/products/:id/edit" element={<EditProduct />} />
             </Route>
         </Routes>
     );

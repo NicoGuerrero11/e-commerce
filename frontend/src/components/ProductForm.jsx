@@ -15,7 +15,7 @@ function ProductForm({initialData = {}, onSubmit, formTitle}) {
             return;
         }
 
-        onSubmit(name, price, countInStock, image);
+        onSubmit({name, price, countInStock, image});
     }
   return (
     <Box  sx={{ mt: 4 }}>

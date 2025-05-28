@@ -4,6 +4,7 @@ import connectDB from './config/db.js';
 import authRouter from './routes/auth.routes.js';
 import productRoutes from "./routes/product.routes.js";
 import orderRoutes from "./routes/order.routes.js";
+import userRoutes from './routes/user.routes.js';
 
 const app = express()
 
@@ -20,6 +21,7 @@ app.use(express.json())
 app.use('/api/auth', authRouter)
 app.use('/api', productRoutes)
 app.use('/api', orderRoutes)
+app.use('/api', userRoutes)
 
 
 const startServer = async () => {
